@@ -18,3 +18,4 @@ bin/
 src/lats/fixtures/metron.json
 src/github.com/cloudfoundry/gorouter/
 src/github.com/rcrowley/
+*.exe
