@@ -84,25 +84,26 @@ function DoAction-Install()
 
     Write-Output 'Installing Metron service ...'
   
-    $env:ETCD_URLS                                 = Null-Coallesce $env:ETCD_URLS                                 "http://etcd.service.dc1.consul:4001"
-    $env:ETCD_MAX_CONCURRENT_REQUESTS              = Null-Coallesce $env:ETCD_MAX_CONCURRENT_REQUESTS              "10"
-    $env:ETCD_QUERY_INTERVAL_MILLISECONDS          = Null-Coallesce $env:ETCD_QUERY_INTERVAL_MILLISECONDS          "5000"
-    $env:METRON_LEGACY_INCOMING_MESSAGES_PORT      = Null-Coallesce $env:METRON_LEGACY_INCOMING_MESSAGES_PORT      "4456"
-    $env:METRON_DROPSONDE_INCOMING_MESSAGESPORT    = Null-Coallesce $env:METRON_DROPSONDE_INCOMING_MESSAGESPORT    "3457"
-    $env:METRON_VARZ_USER                          = Null-Coallesce $env:METRON_VARZ_USER                          ""
-    $env:METRON_VARZ_PASS                          = Null-Coallesce $env:METRON_VARZ_PASS                          ""
-    $env:METRON_VARZ_PORT                          = Null-Coallesce $env:METRON_VARZ_PORT                          "0"
-    $env:LOGGREGATOR_SHARED_SECRET                 = Null-Coallesce $env:LOGGREGATOR_SHARED_SECRET                 "loggregator-secret"
-    $env:LOGGREGATOR_JOB_INDEX                     = Null-Coallesce $env:LOGGREGATOR_JOB_INDEX                     "0"
-    $env:LOGGREGATOR_JOB                           = Null-Coallesce $env:LOGGREGATOR_JOB                           "cell_z1"
-    $env:LOGGREGATOR_ZONE                          = Null-Coallesce $env:LOGGREGATOR_ZONE                          "z1"
-    $env:LOGGREGATOR_LEGACY_PORT                   = Null-Coallesce $env:LOGGREGATOR_LEGACY_PORT                   "3456"
-    $env:LOGGREGATOR_DROPSONDE_PORT                = Null-Coallesce $env:LOGGREGATOR_DROPSONDE_PORT                "3458"
-    $env:NATS_HOSTS                                = Null-Coallesce $env:NATS_HOSTS                                "nats.service.dc1.consul"
-    $env:NATS_PORT                                 = Null-Coallesce $env:NATS_PORT                                 "4222"
-    $env:NATS_USER                                 = Null-Coallesce $env:NATS_USER                                 "nats"
-    $env:NATS_PASS                                 = Null-Coallesce $env:NATS_PASS                                 "nats"
-    $env:COLLECTOR_REGISTRAR_INTERVAL_MILLISECONDS = Null-Coallesce $env:COLLECTOR_REGISTRAR_INTERVAL_MILLISECONDS "60000"
+    $env:ETCD_URLS                                 = Null-Coalesce $env:ETCD_URLS                                 "http://etcd.service.dc1.consul:4001"
+    $env:ETCD_MAX_CONCURRENT_REQUESTS              = Null-Coalesce $env:ETCD_MAX_CONCURRENT_REQUESTS              "10"
+    $env:ETCD_QUERY_INTERVAL_MILLISECONDS          = Null-Coalesce $env:ETCD_QUERY_INTERVAL_MILLISECONDS          "5000"
+    $env:METRON_LEGACY_INCOMING_MESSAGES_PORT      = Null-Coalesce $env:METRON_LEGACY_INCOMING_MESSAGES_PORT      "4456"
+    $env:METRON_DROPSONDE_INCOMING_MESSAGESPORT    = Null-Coalesce $env:METRON_DROPSONDE_INCOMING_MESSAGESPORT    "3457"
+    $env:METRON_VARZ_USER                          = Null-Coalesce $env:METRON_VARZ_USER                          ""
+    $env:METRON_VARZ_PASS                          = Null-Coalesce $env:METRON_VARZ_PASS                          ""
+    $env:METRON_VARZ_PORT                          = Null-Coalesce $env:METRON_VARZ_PORT                          "0"
+    $env:LOGGREGATOR_SHARED_SECRET                 = Null-Coalesce $env:LOGGREGATOR_SHARED_SECRET                 "loggregator-secret"
+    $env:LOGGREGATOR_JOB_INDEX                     = Null-Coalesce $env:LOGGREGATOR_JOB_INDEX                     "0"
+    $env:LOGGREGATOR_JOB                           = Null-Coalesce $env:LOGGREGATOR_JOB                           "cell_z1"
+    $env:LOGGREGATOR_ZONE                          = Null-Coalesce $env:LOGGREGATOR_ZONE                          "z1"
+    $env:LOGGREGATOR_LEGACY_PORT                   = Null-Coalesce $env:LOGGREGATOR_LEGACY_PORT                   "3456"
+    $env:LOGGREGATOR_DROPSONDE_PORT                = Null-Coalesce $env:LOGGREGATOR_DROPSONDE_PORT                "3458"
+    $env:NATS_HOSTS                                = Null-Coalesce $env:NATS_HOSTS                                "nats.service.dc1.consul"
+    $env:NATS_PORT                                 = Null-Coalesce $env:NATS_PORT                                 "4222"
+    $env:NATS_USER                                 = Null-Coalesce $env:NATS_USER                                 "nats"
+    $env:NATS_PASS                                 = Null-Coalesce $env:NATS_PASS                                 "nats"
+    $env:COLLECTOR_REGISTRAR_INTERVAL_MILLISECONDS = Null-Coalesce $env:COLLECTOR_REGISTRAR_INTERVAL_MILLISECONDS "60000"
+    $env:METRON_INSTALL_DIR                        = Null-Coalesce $env:METRON_INSTALL_DIR                        "c:\metron"
 
     Write-Output "Using ETCD_URLS                                 $($env:ETCD_URLS)"
     Write-Output "Using ETCD_MAX_CONCURRENT_REQUESTS              $($env:ETCD_MAX_CONCURRENT_REQUESTS)"
@@ -127,29 +128,31 @@ function DoAction-Install()
     $configuration = @{}
     
     
-    $configuration["EtcdUrls"] = $env:ETCD_URLS 
-    $configuration["EtcdMaxConcurrentRequests"] = $env:ETCD_MAX_CONCURRENT_REQUESTS 
-    $configuration["EtcdQueryIntervalMilliseconds"] = $env:ETCD_QUERY_INTERVAL_MILLISECONDS 
-    $configuration["LegacyIncomingMessagesPort"] = $env:METRON_LEGACY_INCOMING_MESSAGES_PORT 
-    $configuration["DropsondeIncomingMessagesPort"] = $env:METRON_DROPSONDE_INCOMING_MESSAGESPORT 
+    $configuration["EtcdUrls"] = @($env:ETCD_URLS)
+    $configuration["EtcdMaxConcurrentRequests"] = [int]$env:ETCD_MAX_CONCURRENT_REQUESTS 
+    $configuration["EtcdQueryIntervalMilliseconds"] = [int]$env:ETCD_QUERY_INTERVAL_MILLISECONDS 
+    $configuration["LegacyIncomingMessagesPort"] = [int]$env:METRON_LEGACY_INCOMING_MESSAGES_PORT 
+    $configuration["DropsondeIncomingMessagesPort"] = [int]$env:METRON_DROPSONDE_INCOMING_MESSAGESPORT 
     $configuration["VarzUser"] = $env:METRON_VARZ_USER 
     $configuration["VarzPass"] = $env:METRON_VARZ_PASS 
-    $configuration["VarzPort"] = $env:METRON_VARZ_PORT 
+    $configuration["VarzPort"] = [int]$env:METRON_VARZ_PORT 
     $configuration["SharedSecret"] = $env:LOGGREGATOR_SHARED_SECRET 
-    $configuration["Index"] = $env:LOGGREGATOR_JOB_INDEX 
+    $configuration["Index"] = [int]$env:LOGGREGATOR_JOB_INDEX 
     $configuration["Job"] = $env:LOGGREGATOR_JOB 
     $configuration["Zone"] = $env:LOGGREGATOR_ZONE 
-    $configuration["LoggregatorLegacyPort"] = $env:LOGGREGATOR_LEGACY_PORT 
-    $configuration["LoggregatorDropsondePort"] = $env:LOGGREGATOR_DROPSONDE_PORT 
-    $configuration["NatsHosts"] = $env:NATS_HOSTS 
-    $configuration["NatsPort"] = $env:NATS_PORT 
-    $configuration["NatsUser"] = $env:NATS_USER 
-    $configuration["NatsPass"] = $env:NATS_PASS 
-    $configuration["CollectorRegistrarIntervalMilliseconds"] = $env:COLLECTOR_REGISTRAR_INTERVAL_MILLISECONDS
+    $configuration["LoggregatorLegacyPort"] = [int]$env:LOGGREGATOR_LEGACY_PORT 
+    $configuration["LoggregatorDropsondePort"] = [int]$env:LOGGREGATOR_DROPSONDE_PORT 
+    $configuration["NatsHosts"] = @($env:NATS_HOSTS)
+    $configuration["NatsPort"] = [int]$env:NATS_PORT
+    $configuration["NatsUser"] = $env:NATS_USER
+    $configuration["NatsPass"] = $env:NATS_PASS
+    $configuration["CollectorRegistrarIntervalMilliseconds"] = [int]$env:COLLECTOR_REGISTRAR_INTERVAL_MILLISECONDS
 
-    $destFolder = $env:DIEGO_INSTALL_DIR
+    $destFolder = $env:METRON_INSTALL_DIR
+    $configFolder = Join-Path $destFolder 'config'
+    $logsFolder = Join-Path $destFolder 'logs'
     
-    foreach ($dir in @($destFolder))
+    foreach ($dir in @($destFolder, $configFolder, $logsFolder))
     {
         Write-Output "Cleaning up directory ${dir}"
         Remove-Item -Force -Recurse -Path $dir -ErrorVariable errors -ErrorAction SilentlyContinue
@@ -182,7 +185,7 @@ function DoAction-Install()
         exit 1;
     }
 
-    InstallDiego $destfolder $configuration $configFolder $logsFolder
+    InstallMetron $destfolder $configuration
 }
 
 # This function calls the nssm.exe binary to set a property
@@ -224,13 +227,13 @@ function InstallNSSMService($serviceName, $executable)
 function SetupNSSMService($serviceName, $serviceDisplayName, $serviceDescription, $startupDirectory, $executable, $arguments, $stdoutLog, $stderrLog)
 {
     InstallNSSMService $serviceName $executable
-	SetNSSMParameter $serviceName "ObjectName" ".\NetworkService"
-    SetNSSMParameter $serviceName "DisplayName" $serviceDisplayName
-    SetNSSMParameter $serviceName "Description" $serviceDescription
-    SetNSSMParameter $serviceName "AppDirectory" $startupDirectory
-    SetNSSMParameter $serviceName "AppParameters" $arguments
-    SetNSSMParameter $serviceName "AppStdout" $stdoutLog
-    SetNSSMParameter $serviceName "AppStderr" $stderrLog
+	SetNSSMParameter $serviceName "ObjectName"      "NetworkService"
+    SetNSSMParameter $serviceName "DisplayName"     $serviceDisplayName
+    SetNSSMParameter $serviceName "Description"     $serviceDescription
+    SetNSSMParameter $serviceName "AppDirectory"    $startupDirectory
+    SetNSSMParameter $serviceName "AppParameters"   $arguments
+    SetNSSMParameter $serviceName "AppStdout"       $stdoutLog
+    SetNSSMParameter $serviceName "AppStderr"       $stderrLog
 }
 
 
@@ -267,15 +270,6 @@ function InstallMetron($destfolder, $configuration)
         $stdoutLog = $serviceConfig["stdoutLog"]
         $stderrLog = $serviceConfig["stderrLog"]
         SetupNSSMService $serviceName $serviceDisplayName $serviceDescription $startupDirectory $executable $arguments $stdoutLog $stderrLog
-    }
-    
-    # Setup firewall rules
-    if (!(Get-NetFirewallRule | where {$_.Name -eq "TCP8080"})) {
-       New-NetFirewallRule -Name "TCP8080" -DisplayName "HTTP on TCP/8080" -Protocol tcp -LocalPort 8080 -Action Allow -Enabled True
-    }
-	
-	if (!(Get-NetFirewallRule | where {$_.Name -eq "TCP1700"})) {
-       New-NetFirewallRule -Name "TCP1700" -DisplayName "HTTP on TCP/1700" -Protocol tcp -LocalPort 1700 -Action Allow -Enabled True
     }
     
     # Start metron
