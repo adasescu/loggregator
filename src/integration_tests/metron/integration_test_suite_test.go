@@ -3,6 +3,7 @@ package integration_test
 import (
 	"net/http"
 	"os/exec"
+	"runtime"
 
 	"github.com/cloudfoundry/storeadapter/storerunner/etcdstorerunner"
 	"github.com/pivotal-golang/localip"
@@ -49,9 +50,14 @@ var _ = BeforeSuite(func() {
 })
 
 var _ = AfterSuite(func() {
-	metronSession.Kill().Wait()
+	metronSession.Kill().Wait()	
 	gexec.CleanupBuildArtifacts()
 
 	etcdRunner.Adapter().Disconnect()
-	etcdRunner.Stop()
+	// etcdRunner.Stop() send interrupt signal which doesn't work on Windows
+	if runtime.GOOS == "windows" {
+		etcdRunner.KillWithFire()
+	} else { 
+		etcdRunner.Stop() 
+	}
 })

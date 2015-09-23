@@ -6,6 +6,7 @@ import (
 
 	"net/http"
 	"os/exec"
+	"runtime"
 	"testing"
 
 	"github.com/cloudfoundry/dropsonde/factories"
@@ -62,7 +63,12 @@ var _ = AfterSuite(func() {
 	gexec.CleanupBuildArtifacts()
 
 	etcdRunner.Adapter().Disconnect()
-	etcdRunner.Stop()
+	// etcdRunner.Stop() send interrupt signal which doesn't work on Windows
+	if runtime.GOOS == "windows" {
+		etcdRunner.KillWithFire()
+	} else { 
+		etcdRunner.Stop() 
+	}
 })
 
 func basicValueMessage() []byte {
