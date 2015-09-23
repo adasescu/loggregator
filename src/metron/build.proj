@@ -9,11 +9,18 @@
   /t:Installer
     Creates the metron installer. Builds everything first.
     
+ /t:UnitTest
+    Runs metron unit tests   
+    
+ /t:IntegrationTest
+    Runs metron integration tests   
+    
   -->
 
   <PropertyGroup>
     <!-- Directory containing this .proj file -->
     <ProjectRoot>$(MSBuildThisFileDirectory)</ProjectRoot>
+    <LoggregatorRoot>$(ProjectRoot)..\..\</LoggregatorRoot>
 
     <!-- Location of installer tools -->
     <InstallerPackagerDir>$(ProjectRoot)\windows-tools\installer</InstallerPackagerDir>
@@ -44,5 +51,22 @@
   <Target Name="Build" >
     <Message Importance="high" Text="Building metron ..." />
     <Exec WorkingDirectory="$(ProjectRoot)" Command="go build" />
+  </Target>
+
+  <Target Name="PrepareDepandencies">
+    <Exec WorkingDirectory="$(LoggregatorRoot)" Command="go get github.com/onsi/ginkgo/ginkgo"></Exec>
+    <Exec WorkingDirectory="$(LoggregatorRoot)" Command="go get github.com/onsi/gomega"></Exec>
+    <Exec WorkingDirectory="$(LoggregatorRoot)" Command="go get github.com/coreos/etcd"></Exec>
+    <Exec WorkingDirectory="$(LoggregatorRoot)" Command="go get github.com/nats-io/gnatsd"></Exec>
+  </Target>
+  
+  <!-- Target for running metron unit tests -->
+  <Target Name="UnitTest" DependsOnTargets="PrepareDepandencies">
+    <Exec WorkingDirectory="$(LoggregatorRoot)\src\metron" Command="ginkgo -r"></Exec>
+  </Target>
+
+  <!-- Target for running metron integration tests -->
+  <Target Name="IntegrationTest" DependsOnTargets="PrepareDepandencies">
+    <Exec WorkingDirectory="$(LoggregatorRoot)\src\integration_tests\metron" Command="ginkgo -r"></Exec>
   </Target>
 </Project>
