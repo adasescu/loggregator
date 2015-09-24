@@ -19,6 +19,8 @@ var _ = Describe("Statsd support", func() {
 	var fakeDoppler net.PacketConn
 
 	BeforeEach(func() {
+		// wait 1 sec for port to be cleared
+		time.Sleep(1 * time.Second)
 		fakeDoppler = eventuallyListensForUDP("localhost:3457")
 
 		node := storeadapter.StoreNode{

@@ -21,6 +21,8 @@
     <!-- Directory containing this .proj file -->
     <ProjectRoot>$(MSBuildThisFileDirectory)</ProjectRoot>
     <LoggregatorRoot>$(ProjectRoot)..\..\</LoggregatorRoot>
+    <SkipUnitTests>$(SkipUnitTests)</SkipUnitTests>
+    <SkipIntegrationTests>$(SkipIntegrationTests)</SkipIntegrationTests>
 
     <!-- Location of installer tools -->
     <InstallerPackagerDir>$(ProjectRoot)\windows-tools\installer</InstallerPackagerDir>
@@ -62,11 +64,11 @@
   
   <!-- Target for running metron unit tests -->
   <Target Name="UnitTest" DependsOnTargets="PrepareDepandencies">
-    <Exec WorkingDirectory="$(LoggregatorRoot)\src\metron" Command="ginkgo -r"></Exec>
+    <Exec WorkingDirectory="$(LoggregatorRoot)\src\metron" Command="ginkgo -r --skipPackage=$(SkipUnitTests)"></Exec>
   </Target>
 
   <!-- Target for running metron integration tests -->
   <Target Name="IntegrationTest" DependsOnTargets="PrepareDepandencies">
-    <Exec WorkingDirectory="$(LoggregatorRoot)\src\integration_tests\metron" Command="ginkgo -r"></Exec>
+    <Exec WorkingDirectory="$(LoggregatorRoot)\src\integration_tests\metron" Command="ginkgo -r --skipPackage=$(SkipIntegrationTests)"></Exec>
   </Target>
 </Project>

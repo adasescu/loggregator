@@ -17,7 +17,11 @@ var _ = Describe("Dropsonde message forwarding", func() {
 	var testDoppler net.PacketConn
 
 	BeforeEach(func() {
-		testDoppler, _ = net.ListenPacket("udp", "localhost:3457")
+		// wait 1 sec for port to be cleared
+		time.Sleep(1 * time.Second)
+		var err error
+		testDoppler, err = net.ListenPacket("udp", "localhost:3457")
+		Expect(err).ToNot(HaveOccurred())
 
 		node := storeadapter.StoreNode{
 			Key:   "/healthstatus/doppler/z1/0",
